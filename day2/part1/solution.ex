@@ -11,11 +11,10 @@ end
 # {horizontal,depth}
 {:ok, contents} = File.read("../2.txt")
 
-{horizontal, depth} =
-  contents
-  |> String.split("\n", trim: true)
-  |> Enum.map(&Two.return_pair/1)
-  |> Enum.reduce(fn {a, b}, {c, d} -> {a + c, b + d} end)
-  |> IO.inspect()
-
-IO.puts("The final result is #{horizontal * depth}")
+contents
+|> String.split("\n", trim: true)
+|> Enum.map(&Two.return_pair/1)
+|> Enum.reduce(fn {a, b}, {c, d} -> {a + c, b + d} end)
+|> then(fn {depth, position} -> depth * position end)
+|> then(&"The final result is #{&1}")
+|> IO.puts()
